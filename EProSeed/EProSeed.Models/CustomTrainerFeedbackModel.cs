@@ -7,6 +7,10 @@ using System.Threading.Tasks;
 
 namespace EProSeed.Models
 {
+    /*
+     * 
+     * 
+     * */
         public class CustomTrainerFeedbackModel
         {
         public int BatchID { get; set; }
