@@ -1,0 +1,36 @@
+﻿@model EProSeed.Models.ReportModel
+
+@{
+    ViewBag.Title = "Report";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="col-md-12">
+ @using (Html.BeginForm())
+ {
+    @Html.AntiForgeryToken()
+    
+        <div class="form-group">
+            <label>Trainer</label>
+            @Html.DropDownListFor(m => m.BatchId, ViewBag.Batch as SelectList,
+            "Select Batch", new
+             {
+                 @class = "form-control",                
+             })      
+
+          @Html.ValidationMessageFor(m=>m.BatchId)          
+
+        </div>
+
+
+        <input type="submit" class="btn btn-success" value="Submit" id="btnSubmit" />
+        
+        <div id="reportPartial">
+        </div>
+ }
+
+</div>
+
+<script type="text/javascript" src="~/Scripts/Report.js"></script>
+
+

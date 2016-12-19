@@ -1,0 +1,102 @@
+﻿@model vmLogin
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <link rel="icon" href="~/Content/images/eproseed.png" type="image/png" sizes="16x16"> 
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/style")
+</head>
+<body class="login">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="outer">
+                    <div class="middle">
+                        <div class="inner">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-2 col-md-offset-4 ver-line">
+                                        <h1 class="logo">
+                                            <img src="~/Content/images/eproseed.png" />
+                                            <span>Pro Seed</span>
+                                        </h1>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="col-md-5">
+                                            <div class="row">
+                                                <div class="login-inner">
+                                                    @using (Html.BeginForm("login", "account"))
+                                                    {
+                                                        @Html.AntiForgeryToken()
+
+                                                        <div class="form-group">
+                                                            @Html.TextBoxFor(m=>m.Email,new { @class= "form-control", @placeholder= "Email", @autofocus="" })
+                                                            @Html.ValidationMessageFor(m=>m.Email)
+                                                        </div>
+                                                        <div class="form-group">
+                                                            @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Password" })
+                                                            @Html.ValidationMessageFor(m => m.Password)
+                                                        </div>
+                                                        if (ViewData["Error"]!=null)
+                                                        {
+                                                            <div class="field-validation-error text-center">
+                                                                @ViewData["Error"]
+                                                            </div>
+                                                        }
+                                                        <div class="form-group  text-right ">
+                                                            <input type="submit" name="Login" id="Login" class="btn btn-success" value="Login" />
+                                                        </div>
+                                                    }
+
+                                                
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+            </div>
+        </div>
+
+
+        <div class="footer">
+            <p>
+                &copy; Prowareness 2016.
+            </p>
+        </div>
+
+
+      
+
+
+
+
+
+
+
+
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/js");
+    
+</body>
+</html>
