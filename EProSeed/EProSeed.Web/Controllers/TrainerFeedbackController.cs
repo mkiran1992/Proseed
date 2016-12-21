@@ -10,7 +10,7 @@ namespace EProSeed.Web.Controllers
     public class TrainerFeedbackController : Controller
     {
         protected readonly ITrainerFeedback TrainerFeedbackRepo;
-        protected readonly IBatch BatchRepo;        
+        protected readonly IBatch BatchRepo;
         public TrainerFeedbackController()
         {
             TrainerFeedbackRepo = new TrainerFeedback();
@@ -28,9 +28,9 @@ namespace EProSeed.Web.Controllers
             }
             else if (userType == UserType.Trainee.ToString())
             {
-                batchList = BatchRepo.GetAllForTrainee(currentUserId);
+                batchList.Add(BatchRepo.GetBatchDetailsByTraineeId(currentUserId));
             }
-                return View(batchList);
+            return View(batchList);
         }
 
         public ActionResult TrainerFeedback(int id)
@@ -42,26 +42,26 @@ namespace EProSeed.Web.Controllers
             {
                 trainerFeedbackList = TrainerFeedbackRepo.GetTrainerFeedbackList(id);
             }
-            else if(userType == UserType.Trainee.ToString())
+            else if (userType == UserType.Trainee.ToString())
             {
                 trainerFeedbackList = TrainerFeedbackRepo.GetTrainerFeedbackListForTrainer(id, currentUserId);
-            }            
-            
+            }
+
             TempData["CurrentBatchID"] = id;
-            return View("TrainerFeedback",trainerFeedbackList);
+            return View("TrainerFeedback", trainerFeedbackList);
         }
 
         public ActionResult Create()
         {
             TrainersFeedbackModel model = new TrainersFeedbackModel();
-            if(TempData["CurrentBatchID"] == null)
+            if (TempData["CurrentBatchID"] == null)
             {
                 return RedirectToAction("Index");
             }
             else
             {
                 model.BatchID = (int)TempData.Peek("CurrentBatchID");
-            }            
+            }
             return View(model);
         }
 
@@ -73,7 +73,7 @@ namespace EProSeed.Web.Controllers
                 if (ModelState.IsValid)
                 {
                     model.DateCreated = DateTime.Now;
-                    model.TraineeID = Session["UserId"]  == null ? 0 : Convert.ToInt32(Session["UserId"].ToString()); 
+                    model.TraineeID = Session["UserId"] == null ? 0 : Convert.ToInt32(Session["UserId"].ToString());
 
                     if (TrainerFeedbackRepo.Create(model) == true)
                     {
@@ -122,7 +122,7 @@ namespace EProSeed.Web.Controllers
                 {
                     //something went wrong! error
                 }
-            }            
+            }
             return RedirectToAction("TrainerFeedback", new { id = model.BatchID });
         }
 
@@ -139,7 +139,7 @@ namespace EProSeed.Web.Controllers
             {
                 ViewData["ErrorMsg"] = "Failed to delete trainer's feedback.";
             }
-            
+
             return RedirectToAction("TrainerFeedback", new { id = (int)TempData.Peek("CurrentBatchID") });
         }
     }

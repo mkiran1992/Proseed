@@ -43,6 +43,27 @@ namespace EProSeed.Lib.BLL
                 throw new Exception(ex.Message);
             }
         }
+        /// <summary>
+        /// Batch Details
+        /// </summary>
+        /// <param name="traineeId"></param>
+        /// <returns>BatchModel</returns>
+        public BatchModel GetBatchDetailsByTraineeId(string traineeId)
+        {
+            try
+            {
+                var batchDetails = (from inductee in db.Inductee
+                                 join  trainee in db.Tranner on inductee.Email equals trainee.Email
+                                 join batch in db.Batch on inductee.BatchID equals batch.Id
+                                 select batch).FirstOrDefault();
+
+                return batchDetails;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
 
         public bool Create(BatchModel _batch)
         {

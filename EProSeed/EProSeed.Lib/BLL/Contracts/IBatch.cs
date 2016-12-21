@@ -23,6 +23,8 @@ namespace EProSeed.Lib.BLL
         void DeleteConfirmed(int? id);
 
         IList<BatchModel> GetAllForTrainee(string trainee);
+
+        BatchModel GetBatchDetailsByTraineeId(string userId);
     }
 
 
