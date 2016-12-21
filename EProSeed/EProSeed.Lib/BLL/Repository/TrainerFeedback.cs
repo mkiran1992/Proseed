@@ -134,7 +134,7 @@ namespace EProSeed.Lib.BLL.Repository
             var customTrainerFeedback = new CustomTrainerFeedbackModel();
             try
             {
-                var feedbackList = db.TrainersFeedback.Where(f => f.BatchID == batchId && f.TraineeID.ToString() == traineeId).OrderByDescending(d => d.DateCreated);
+                var feedbackList = db.TrainersFeedback.Where(f => f.BatchID == batchId && f.TraineeID.ToString() == traineeId).OrderByDescending(d => d.DateCreated).ToList();
                 var batchDetail = db.Batch.Find(batchId);
 
                 customTrainerFeedback.BatchID = batchDetail.Id;
@@ -161,7 +161,7 @@ namespace EProSeed.Lib.BLL.Repository
                         feedbackReponse.DidnotGoWell = feedback.DidnotGoWell;
                         feedbackReponse.CanBeImproved = feedback.CanBeImproved;
                         feedbackReponse.TraineeID = feedback.TraineeID;
-                        feedbackReponse.TraineeName = trainee.Find(feedback.TraineeID).Name;
+                        feedbackReponse.TraineeName = db.Tranner.Find(feedback.TraineeID).Name;
 
                         feedbackReponseList.Add(feedbackReponse);
                     }

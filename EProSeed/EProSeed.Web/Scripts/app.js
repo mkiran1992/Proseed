@@ -42,6 +42,7 @@
     //   Feedback.toggle();
     Feedback.toggleRow();
     dashboard.ShowBatchName();
+    debugger;
     slider.showSlider();
 });
 
@@ -127,6 +128,7 @@ slider = {
         }
     },
     createSlider: function (element) {
+        debugger;
         var connectSlider = document.getElementById('slider-connect-' + element);
         var formElement = document.getElementById(element);
         var rating = 0;
@@ -152,6 +154,7 @@ slider = {
     },
 
     showSlider: function () {
+        debugger;
         slider.createSlider('PassionForClientSuccess');
         slider.createSlider('FocusOnQuality');
         slider.createSlider('Communication');
@@ -162,5 +165,6 @@ slider = {
         slider.createSlider('Commitment');
         slider.createSlider('OwnerShip');
         slider.createSlider('TechnicalCompetency');
+        slider.createSlider('TrainerRating');
     }
 }
