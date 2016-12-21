@@ -25,15 +25,18 @@
         $('#ediBatchDates').datepicker('setDates', batchDates);
     }
 
-    createBatchDatesCalendar.on('changeDate', function (e) {
-        var dates = $('#createBatchDates').datepicker('getDates');
+    function on_date_change(e) {
+        var dates = $(this).datepicker('getDates');
         var batchDates = '';
         for (var index in dates) {
             var date = moment(dates[index]).format('MM/DD/YYYY');
             batchDates += date + ',';
         }
         $('#BatchDates').val(batchDates);
-    });
+    }
+
+    createBatchDatesCalendar.on('changeDate', on_date_change);
+    editBatchDatesCalendar.on('changeDate', on_date_change)
     $('[data-toggle="tooltip"]').tooltip();
 
     //   Feedback.toggle();
