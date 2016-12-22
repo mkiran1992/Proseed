@@ -15,7 +15,7 @@ namespace EProSeed.Web.Controllers
             _Trainer = new Trainer();
         }
 
-
+        [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
             return View();
@@ -23,6 +23,7 @@ namespace EProSeed.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [AllowAnonymous]
         public ActionResult Login(vmLogin model, string returnUrl)
         {
             try

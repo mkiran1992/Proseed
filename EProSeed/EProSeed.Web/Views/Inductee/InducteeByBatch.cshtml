@@ -42,21 +42,28 @@
                         @Inductee.Phone
                     </td>
                     <td>
-                        @if(GotUserType && CurrentUserType == EProSeed.Lib.BLL.UserType.Trainer)
-                        { 
-                        <a href="/Inductee/Edit/@Inductee.Id" data-toggle="tooltip" title="Edit '@Inductee.Name'" class="blue"> 
-                        <i class="ace-icon fa fa-2x fa-pencil"></i></a> 
+                        @{
+                            if (GotUserType && CurrentUserType == EProSeed.Lib.BLL.UserType.Trainer)
+                            {
+                                <a href="/inductee/edit/@Inductee.Id" data-toggle="tooltip" title="Edit '@Inductee.Name'" class="blue"> <i class="ace-icon fa fa-2x fa-pencil"></i></a>
 
+                                    <a href="/inductee/delete/@Inductee.Id" data-toggle="tooltip" class="red" title="Delete '@Inductee.Name'"><i class="ace-icon fa fa-2x fa-trash"></i></a>
 
-
-                        <a href="/Inductee/delete/@Inductee.Id" onclick="return confirm('Are you sure?');" data-toggle="tooltip" class="red" title="Delete '@Inductee.Name'"><i class="ace-icon fa fa-2x fa-trash"></i></a>
-                            
+                                    <a href="/feedback/of/@Inductee.Id" data-toggle="tooltip" title="Feedback">
+                                        <i class="fa fa-2x fa-archive" aria-hidden="true"></i>
+                                    </a>
+                            }
+                            string UserEmailId = Session["UserEmailId"].ToString();
+                            if (GotUserType && CurrentUserType == EProSeed.Lib.BLL.UserType.Trainee && UserEmailId == Inductee.Email)
+                            {
+                                <a href="/feedback/of/@Inductee.Id" data-toggle="tooltip" title="Feedback">
+                                    <i class="fa fa-2x fa-archive" aria-hidden="true"></i>
+                                </a>
+                            }
                         }
-                        &nbsp;
-                        <a href="/feedback/of/@Inductee.Id" data-toggle="tooltip" title="Feedback">
-                            <i class="fa fa-2x fa-archive" aria-hidden="true"></i>
-                        </a>
                     </td>
+
+
 
                 </tr>
             }
