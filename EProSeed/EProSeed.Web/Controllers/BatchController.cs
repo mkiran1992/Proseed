@@ -37,18 +37,25 @@ namespace EProSeed.Web.Controllers
             return View();
         }
 
-        [HttpPost]
-        public ActionResult Create(Models.vmBatch batchModel)
+        private BatchModel _get_batch(Models.vmBatch batchModel)
         {
             var batch = new BatchModel
             {
-                BatchDates = batchModel.BatchDates == null ? new List<BatchDates>() : batchModel.BatchDates.Split(',').Where(p => !string.IsNullOrWhiteSpace(p)).Select(p => new BatchDates() { BatchDate = DateTime.ParseExact(p, "MM/dd/yyyy", null) }).OrderBy(p => p.BatchDate).ToList(),
+                BatchDates = batchModel.BatchDates == null ? new List<BatchDates>() : batchModel.BatchDates.Split(',').Where(p => !string.IsNullOrWhiteSpace(p)).Select(p => new BatchDates() { BatchID= batchModel.Id, BatchDate = DateTime.ParseExact(p, "MM/dd/yyyy", null) }).OrderBy(p => p.BatchDate).ToList(),
                 Id = batchModel.Id,
                 Name = batchModel.Name,
+                TrainerId = batchModel.TrainerId
             };
+            return batch;
+        }
+
+        [HttpPost]
+        public ActionResult Create(Models.vmBatch batchModel)
+        {
+            var batch = _get_batch(batchModel);
             try
             {
-                batch.TrainerId = Convert.ToInt32(User.Identity.Name);
+                //batch.TrainerId = Convert.ToInt32(User.Identity.Name);
                 if (ModelState.IsValid)
                 {
 
@@ -92,7 +99,7 @@ namespace EProSeed.Web.Controllers
             ViewBag.Trainers = new SelectList(TrainerList, "Id", "Name", Batch.TrainerId);
             var vmBatches = new Models.vmBatch
             {
-                BatchDates = string.Join(",", Batch.BatchDates.Select(p => p.BatchDate)),
+                BatchDates = string.Join(",", Batch.BatchDates.Select(p => p.BatchDate.ToString("MM/dd/yyyy"))),
                 Id = Batch.Id,
                 Name = Batch.Name,
             };
@@ -100,8 +107,10 @@ namespace EProSeed.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(BatchModel batch)
+        public ActionResult Edit(Models.vmBatch batchModel)
         {
+            var batch = _get_batch(batchModel);
+            batch.BatchDates = null;
             try
             {
                 if (ModelState.IsValid)
