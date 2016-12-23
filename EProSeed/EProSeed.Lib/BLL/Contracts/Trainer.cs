@@ -95,7 +95,10 @@ namespace EProSeed.Lib.BLL
 
         public IList<TrainerModel> GetAll()
         {
-          return   db.Tranner.ToList();
+            int user_type = UserType.Trainer.GetHashCode();
+            return db.Tranner.Where(n => db.TrainerTraineeUserMapping.Any(k =>
+                k.Map_Trainer_Id == n.Id
+                && k.Map_UserType_Id == user_type)).ToList();
         }
 
     }
