@@ -44,8 +44,21 @@ namespace EProSeed.Web.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    if (InducteeRepo.Create(Inductee) == true)
+                    if (InducteeRepo.Create(Inductee))
                     {
+                        TrainerModel trainerModel = new TrainerModel()
+                        {
+                            Email = Inductee.Email,
+                            Name = Inductee.Name,
+                            Password = "123"
+                        };
+                        int trainerid = new Trainer().Create(trainerModel);
+                        var user_type_model = new Trainer_UserType_Map_Model()
+                        {
+                            Map_Trainer_Id = trainerid,
+                            Map_UserType_Id = UserType.Trainee.GetHashCode()
+                        };
+                        new TrainerTraineeUserMapping().Create(user_type_model);
                         ViewData["SuccessMsg"] = "Trainee created successfully.";
                     }
                     else

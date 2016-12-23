@@ -66,8 +66,14 @@ namespace EProSeed.Lib.BLL
             }
         }
 
+        public int Create(TrainerModel trainer)
+        {
+            db.Tranner.Add(trainer);
+            db.SaveChanges();
+            return trainer.Id;
+        }
 
-     public string GetName(int id)
+        public string GetName(int id)
         {
             try
             {
@@ -81,13 +87,11 @@ namespace EProSeed.Lib.BLL
 
         }
 
-
         public TrainerModel Find(int? id)
         {
             var tranner = db.Tranner.Where(t => t.Id == id).SingleOrDefault();
             return tranner;
         }
-
 
         public IList<TrainerModel> GetAll()
         {

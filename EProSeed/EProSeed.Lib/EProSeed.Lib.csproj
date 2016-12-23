@@ -55,6 +55,7 @@
     <Compile Include="BLL\Repository\Batch.cs" />
     <Compile Include="BLL\Contracts\IBatch.cs" />
     <Compile Include="BLL\Contracts\IInductee.cs" />
+    <Compile Include="BLL\Repository\TrainerTraineeUserMapping.cs" />
     <Compile Include="BLL\Repository\TrainerFeedback.cs" />
     <Compile Include="BLL\Repository\Inductee.cs" />
     <Compile Include="BLL\Repository\Feedback.cs" />

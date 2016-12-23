@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace EProSeed.Models
 {
-    [Table("tb_Trainer_UserType_Map")]
+    [Table("UserMap")]
    public class Trainer_UserType_Map_Model
     {
         [Key]
