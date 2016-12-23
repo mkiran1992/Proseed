@@ -38,7 +38,7 @@ namespace EProSeed.Web.Controllers
                         Session["UserType"] = userType.ToString();
                         Session["UserId"] = User.Id.ToString();
                         Session["UserEmailId"] = User.Email.ToString();
-                        FormsAuthentication.RedirectFromLoginPage(User.Id.ToString(), false);
+                        FormsAuthentication.RedirectFromLoginPage(User.Email, true);
                         return RedirectToAction("Index", "Home");
                     }
                 }

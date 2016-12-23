@@ -88,7 +88,7 @@ namespace EProSeed.Lib.BLL.Repository
             {
                 var feedbackList = db.TrainersFeedback.Where(f => f.BatchID == batchId).OrderByDescending(d => d.DateCreated);
                 var batchDetail = db.Batch.Find(batchId);
-
+                var traineeList = db.Tranner.ToList();
                 customTrainerFeedback.BatchID = batchDetail.Id;
                 customTrainerFeedback.BatchName = batchDetail.Name;
                 customTrainerFeedback.BatchStartDate = batchDetail.BatchDates.OrderBy(p => p.BatchDate).Select(p => p.BatchDate).FirstOrDefault();
@@ -105,7 +105,7 @@ namespace EProSeed.Lib.BLL.Repository
                     foreach (var feedback in feedbackList)
                     {
                         var trainee = new Inductee();
-
+                        string traineeName = string.Empty;
                         var feedbackReponse = new FeedbackResponse();
                         feedbackReponse.ID = feedback.ID;
                         feedbackReponse.Rating = feedback.Rating;
@@ -113,7 +113,7 @@ namespace EProSeed.Lib.BLL.Repository
                         feedbackReponse.DidnotGoWell = feedback.DidnotGoWell;
                         feedbackReponse.CanBeImproved = feedback.CanBeImproved;
                         feedbackReponse.TraineeID = feedback.TraineeID;
-                        feedbackReponse.TraineeName = trainee.Find(feedback.TraineeID).Name; 
+                        feedbackReponse.TraineeName = traineeList.Find(tr => tr.Id == feedback.TraineeID).Name;
 
                         feedbackReponseList.Add(feedbackReponse);
                     }

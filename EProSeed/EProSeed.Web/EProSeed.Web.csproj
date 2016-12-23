@@ -151,6 +151,8 @@
     <Compile Include="Models\vmInducteeFeedback.cs" />
     <Compile Include="Models\vmLogin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SingleSessionEnforcement.cs" />
+    <Compile Include="SingleSessionPreparation.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\css\ace-ie.min.css" />
@@ -328,6 +330,10 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EProSeed.DAL\EProSeed.DAL.csproj">
+      <Project>{9874E7E3-1A84-4DC4-A0D6-36FC33CAF976}</Project>
+      <Name>EProSeed.DAL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EProSeed.Lib\EProSeed.Lib.csproj">
       <Project>{695f9f0c-896d-4e2a-abbd-d97f8fc2a502}</Project>
       <Name>EProSeed.Lib</Name>

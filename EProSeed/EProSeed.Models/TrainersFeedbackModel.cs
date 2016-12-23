@@ -28,14 +28,17 @@ namespace EProSeed.Models
 
         [StringLength(500, ErrorMessage = "Comments cannot exceed 500 characters.")]
         [Display(Name = "What went well?")]
+        [Required]
         public string WhatWentWell { get; set; }
 
         [StringLength(500, ErrorMessage = "Comments cannot exceed 500 characters.")]
         [Display(Name = "What didn't go well?")]
+        [Required]
         public string DidnotGoWell { get; set; }
 
         [StringLength(500, ErrorMessage = "Comments cannot exceed 500 characters.")]
         [Display(Name = "What can be improved?")]
+         [Required]
         public string CanBeImproved { get; set; }
 
         [Display(Name = "Rating")]
