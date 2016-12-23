@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EProSeed.Models", "EProSeed
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EProSeed.Web", "EProSeed.Web\EProSeed.Web.csproj", "{F6FDF2DB-B441-4544-9C3B-B3E4CAA3DB97}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Proseed Unit Test", "Proseed Unit Test\Proseed Unit Test.csproj", "{40038F48-627E-446F-9F06-02EAD4D26AD4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{F6FDF2DB-B441-4544-9C3B-B3E4CAA3DB97}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F6FDF2DB-B441-4544-9C3B-B3E4CAA3DB97}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F6FDF2DB-B441-4544-9C3B-B3E4CAA3DB97}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40038F48-627E-446F-9F06-02EAD4D26AD4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40038F48-627E-446F-9F06-02EAD4D26AD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40038F48-627E-446F-9F06-02EAD4D26AD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40038F48-627E-446F-9F06-02EAD4D26AD4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

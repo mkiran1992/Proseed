@@ -16,6 +16,11 @@ namespace EProSeed.Web.Controllers
             TrainerFeedbackRepo = new TrainerFeedback();
             BatchRepo = new Batch();
         }
+        public TrainerFeedbackController(ITrainerFeedback trainerFeedbackRepo, IBatch batchRepo)
+        {
+            TrainerFeedbackRepo = trainerFeedbackRepo;
+            BatchRepo = batchRepo;
+        }
         // GET: /Inductee/
         public ActionResult Index()
         {

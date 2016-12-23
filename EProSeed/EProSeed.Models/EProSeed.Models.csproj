@@ -70,6 +70,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BatchModel.cs" />
+    <Compile Include="ChangePassowrd.cs" />
     <Compile Include="CustomTrainerFeedbackModel.cs" />
     <Compile Include="BatchDates.cs" />
     <Compile Include="FeedbackModel.cs" />

@@ -12,9 +12,12 @@ namespace EProSeed.Lib.BLL
     public class Batch : IBatch
     {
         protected readonly ProDbContext db;
+        protected readonly IBatch _Batch;
+        protected readonly IInductee _Inductee;
         public Batch()
         {
             db = new ProDbContext();
+            _Inductee = new Inductee();
         }
 
         public IList<BatchModel> GetAll()
@@ -50,6 +53,10 @@ namespace EProSeed.Lib.BLL
         /// <returns>BatchModel</returns>
         public BatchModel GetBatchDetailsByTraineeId(string traineeId)
         {
+            //var users = db.Tranner.FirstOrDefault(us=>us.);
+            
+            //var inducteeBatchId = _Inductee.Get(CurrentUserEmail).BatchID;
+            //var traineesBatch = batch.Where(B => B.Id == inducteeBatchId).Select(B => B).ToList<BatchModel>();
             try
             {
                 var batchDetails = (from inductee in db.Inductee
