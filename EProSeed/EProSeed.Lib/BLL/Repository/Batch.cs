@@ -53,16 +53,20 @@ namespace EProSeed.Lib.BLL
         /// <returns>BatchModel</returns>
         public BatchModel GetBatchDetailsByTraineeId(string traineeId)
         {
-            //var users = db.Tranner.FirstOrDefault(us=>us.);
-            
             //var inducteeBatchId = _Inductee.Get(CurrentUserEmail).BatchID;
             //var traineesBatch = batch.Where(B => B.Id == inducteeBatchId).Select(B => B).ToList<BatchModel>();
+            int traineeIntId = Convert.ToInt32(traineeId);
+            var user = db.Tranner.FirstOrDefault(us=>us.Id== traineeIntId);
+
+            var inducteeBatchId = _Inductee.Get(user.Email).BatchID;
+            var traineesBatch = db.Batch.Where(B => B.Id == inducteeBatchId).Select(B => B).ToList<BatchModel>().FirstOrDefault();
             try
             {
                 var batchDetails = (from inductee in db.Inductee
                                  join  trainee in db.Tranner on inductee.Email equals trainee.Email
                                  join batch in db.Batch on inductee.BatchID equals batch.Id
                                  select batch).FirstOrDefault();
+                batchDetails.trainer = traineesBatch.trainer;
 
                 return batchDetails;
             }

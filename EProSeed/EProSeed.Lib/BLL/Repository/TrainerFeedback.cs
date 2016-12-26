@@ -10,9 +10,11 @@ namespace EProSeed.Lib.BLL.Repository
     public class TrainerFeedback : ITrainerFeedback
     {
         protected readonly ProDbContext db;
+        protected readonly IInductee _Inductee;
         public TrainerFeedback()
         {
             db = new ProDbContext();
+            _Inductee = new Inductee();
         }
 
         public bool Create(TrainersFeedbackModel model)
@@ -134,16 +136,21 @@ namespace EProSeed.Lib.BLL.Repository
             var customTrainerFeedback = new CustomTrainerFeedbackModel();
             try
             {
+               
                 var feedbackList = db.TrainersFeedback.Where(f => f.BatchID == batchId && f.TraineeID.ToString() == traineeId).OrderByDescending(d => d.DateCreated).ToList();
-                var batchDetail = db.Batch.Find(batchId);
+                int traineeIntId = Convert.ToInt32(traineeId);
+                var user = db.Tranner.FirstOrDefault(us => us.Id == traineeIntId);
 
-                customTrainerFeedback.BatchID = batchDetail.Id;
-                customTrainerFeedback.BatchName = batchDetail.Name;
-                customTrainerFeedback.BatchStartDate = batchDetail.BatchDates.OrderBy(p => p.BatchDate).Select(p => p.BatchDate).FirstOrDefault();
-                customTrainerFeedback.BatchEndDate = batchDetail.BatchDates.OrderBy(p => p.BatchDate).Select(p => p.BatchDate).LastOrDefault();
-                customTrainerFeedback.TrainerID = batchDetail.trainer.Id;
-                customTrainerFeedback.TrainerName = batchDetail.trainer.Name;
-                customTrainerFeedback.TrainerEmail = batchDetail.trainer.Email;
+                var inducteeBatchId = _Inductee.Get(user.Email).BatchID;
+                var traineesBatch = db.Batch.Where(B => B.Id == inducteeBatchId).Select(B => B).ToList<BatchModel>().FirstOrDefault();
+
+                customTrainerFeedback.BatchID = traineesBatch.Id;
+                customTrainerFeedback.BatchName = traineesBatch.Name;
+                customTrainerFeedback.BatchStartDate = traineesBatch.BatchDates.OrderBy(p => p.BatchDate).Select(p => p.BatchDate).FirstOrDefault();
+                customTrainerFeedback.BatchEndDate = traineesBatch.BatchDates.OrderBy(p => p.BatchDate).Select(p => p.BatchDate).LastOrDefault();
+                customTrainerFeedback.TrainerID = traineesBatch.trainer.Id;
+                customTrainerFeedback.TrainerName = traineesBatch.trainer.Name;
+                customTrainerFeedback.TrainerEmail = traineesBatch.trainer.Email;
 
                 var feedbackReponseList = new List<FeedbackResponse>();
                 var inducteeRepo = new Inductee();
