@@ -2,6 +2,16 @@
 @{
     ViewBag.Title = "Trainee List";
 }
+@{
+            EProSeed.Lib.BLL.UserType UserType = EProSeed.Lib.BLL.UserType.None;
+            bool GotUser = Enum.TryParse<EProSeed.Lib.BLL.UserType>(Session["UserType"].ToString(), out UserType);
+            if (GotUser && UserType == EProSeed.Lib.BLL.UserType.Trainer)
+            {
+        <p class="text-right">
+            <a href="/inductee/create" class="btn btn-success">Create Trainee</a>
+        </p>
+    }
+}
 <div class="col-md-12">
     <div class="table-responsive" style="max-height:900px;overflow:auto;">
         <table class="table table-striped">
@@ -87,15 +97,6 @@
                                 }
             </tbody>
         </table>
-        @{
-            EProSeed.Lib.BLL.UserType UserType = EProSeed.Lib.BLL.UserType.None;
-            bool GotUser = Enum.TryParse<EProSeed.Lib.BLL.UserType>(Session["UserType"].ToString(), out UserType);
-            if (GotUser && UserType == EProSeed.Lib.BLL.UserType.Trainer)
-            {
-                <p class="text-right">
-                    <a href="/inductee/create" class="btn btn-success">Create Trainee</a>
-                </p>
-            }
-        }
+       
     </div>
 </div>

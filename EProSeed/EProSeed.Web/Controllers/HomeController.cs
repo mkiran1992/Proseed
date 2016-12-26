@@ -40,7 +40,7 @@ namespace EProSeed.Web.Controllers
                             objDashboard.BatchList = batch;
                             var LastBatchID = batch.LastOrDefault().Id;
                             var IndList = _Inductee.Get(20, 0);
-                            objDashboard.InducteeList = IndList.Where(i => i.BatchID == LastBatchID).OrderByDescending(i => i.Id).ToList();
+                            objDashboard.InducteeList = IndList.Where(i => i.BatchID == LastBatchID).OrderByDescending(i => i.Batch.BatchDates.OrderBy(f=>f.BatchDate).First()).ToList();
                         }
                         else if (CurrentUserType == UserType.Trainee)
                         {
