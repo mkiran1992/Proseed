@@ -38,6 +38,8 @@ namespace EProSeed.Web.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
+        [ValidateInput(true)]
         public ActionResult Create(InducteeModel Inductee)
         {
             try

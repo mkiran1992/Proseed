@@ -55,6 +55,8 @@ namespace EProSeed.Web.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
+        [ValidateInput(true)]
         public ActionResult Create(Models.vmBatch batchModel)
         {
             var batch = _get_batch(batchModel);

@@ -60,6 +60,8 @@ namespace EProSeed.Web.Controllers
 
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
+        [ValidateInput(true)]
         public ActionResult Create(vmFeedBack feedback)
         {
             vmFeedBack objFeedback = new vmFeedBack();

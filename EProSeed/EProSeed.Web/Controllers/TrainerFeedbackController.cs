@@ -71,6 +71,8 @@ namespace EProSeed.Web.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
+        [ValidateInput(true)]
         public ActionResult Create(TrainersFeedbackModel model)
         {
             try
