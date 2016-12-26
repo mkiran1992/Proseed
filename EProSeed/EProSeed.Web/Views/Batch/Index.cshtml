@@ -2,6 +2,15 @@
 @{
     ViewBag.Title = "Batch list";
 }
+@{  EProSeed.Lib.BLL.UserType UserType = EProSeed.Lib.BLL.UserType.None;
+    bool GotUser = Enum.TryParse<EProSeed.Lib.BLL.UserType>(Session["UserType"].ToString(), out UserType);
+    if (GotUser && UserType == EProSeed.Lib.BLL.UserType.Trainer)
+    {
+        
+        <p class="text-right">
+            <a href="/batch/create" class="btn btn-success">Create Batch</a>
+        </p>}
+}
 <table class="table table-striped">
     <thead>
         <tr>
@@ -60,11 +69,4 @@
         }
     </tbody>
 </table>
-@{  EProSeed.Lib.BLL.UserType UserType = EProSeed.Lib.BLL.UserType.None;
-    bool GotUser = Enum.TryParse<EProSeed.Lib.BLL.UserType>(Session["UserType"].ToString(), out UserType);
-    if (GotUser && UserType == EProSeed.Lib.BLL.UserType.Trainer)
-    {
-        <p class="text-right">
-            <a href="/batch/create" class="btn btn-success">Create Batch</a>
-        </p>}
-}
+

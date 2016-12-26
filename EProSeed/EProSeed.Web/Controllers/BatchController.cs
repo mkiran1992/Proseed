@@ -22,6 +22,11 @@ namespace EProSeed.Web.Controllers
             BatchRepo = new Batch();
             TrainerRepo = new Trainer();
         }
+        public BatchController(IBatch batchRepo, ITrainer trainerRepo)
+        {
+            BatchRepo = batchRepo;
+            TrainerRepo = trainerRepo;
+        }
         public ActionResult Index()
         {
             var _BatchList = BatchRepo.GetAll();
@@ -66,7 +71,7 @@ namespace EProSeed.Web.Controllers
                     }
                     else
                     {
-                        ViewData["ErrorMsg"] = "Failed to create batch.";
+                        ViewData["ErrorMsg"] = "The Batch already exists with the same name.";
                     }
                 }
             }

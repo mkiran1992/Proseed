@@ -80,6 +80,9 @@ namespace EProSeed.Lib.BLL
         {
             try
             {
+                var batch=db.Batch.SingleOrDefault(b => b.Name == _batch.Name.Trim());
+                if (batch != null)
+                    return false;
                 db.Batch.Add(_batch);
                 if (db.SaveChanges() > 0)
                     return true;
