@@ -29,7 +29,15 @@
     <script src="~/Scripts/bootstrap-datepicker.min.js"></script>
     <script src="~/Scripts/nouislider.min.js"></script>
     <script src="/Scripts/App.js"></script>
-
+    <script type="text/javascript" language="javascript">
+     function DisableBackButton() {
+       window.history.forward()
+      }
+     DisableBackButton();
+     window.onload = DisableBackButton;
+     window.onpageshow = function(evt) { if (evt.persisted) DisableBackButton() }
+     window.onunload = function() { void (0) }
+    </script>
 </head>
 <body class="no-skin">
     <div id="navbar" class="navbar navbar-default">
