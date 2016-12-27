@@ -57,7 +57,10 @@
                 </a>
             </div>
             <div class="col-md-5 pull-right text-right">
-                <span class="white username" style="line-height: 50px;">Welcome, @Session["Name"] [@Session["UserType"]] </span>
+                <span class="white username" style="line-height: 50px;">Welcome, @Session["Name"] [@Session["UserType"]] </span> || <span class="white username" style="line-height: 50px;"><a href="/account/logout" style="color:#FFF!important">
+    <i class="fa fa-power-off "></i>
+    Log out
+</a></span>
             </div>
         </div>
     </div>
@@ -114,12 +117,7 @@
                         </a>
                         <b class="arrow"></b>
                     </li>*@
-                <li>
-                    <a href="/account/logout">
-                        <i class="menu-icon fa fa-power-off "></i>
-                        Log out
-                    </a>
-                </li>
+              
             </ul>
             <!-- /.nav-list -->
         </div>
