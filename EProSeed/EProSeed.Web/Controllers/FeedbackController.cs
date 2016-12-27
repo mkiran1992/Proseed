@@ -162,6 +162,8 @@ namespace EProSeed.Web.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
+        [ValidateInput(true)]
         public ActionResult Edit(vmFeedbackProperty feedbackProperty)
         {
 
@@ -209,7 +211,6 @@ namespace EProSeed.Web.Controllers
         }
 
         #endregion
-
 
 
         public ActionResult Delete(int? id, int? InducteeId)

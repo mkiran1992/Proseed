@@ -108,6 +108,8 @@ namespace EProSeed.Web.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
+        [ValidateInput(true)]
         public ActionResult Edit(TrainersFeedbackModel model)
         {
             bool response = false;

@@ -114,6 +114,8 @@ namespace EProSeed.Web.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
+        [ValidateInput(true)]
         public ActionResult Edit(Models.vmBatch batchModel)
         {
             var batch = _get_batch(batchModel);
@@ -141,7 +143,6 @@ namespace EProSeed.Web.Controllers
             return Redirect("/batch");
             //  return View(batch);
         }
-
 
         public ActionResult Delete(int? id)
         {

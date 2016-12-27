@@ -62,6 +62,7 @@ namespace EProSeed.Web.Controllers
                         };
                         new TrainerTraineeUserMapping().Create(user_type_model);
                         ViewData["SuccessMsg"] = "Trainee created successfully.";
+                        return   Redirect("/Inductee");
                     }
                     else
                     {
@@ -94,6 +95,8 @@ namespace EProSeed.Web.Controllers
 
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
+        [ValidateInput(true)]
         public ActionResult Edit(InducteeModel Inductee)
         {
             if (ModelState.IsValid)
