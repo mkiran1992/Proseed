@@ -29,14 +29,14 @@ namespace EProSeed.Web
                 ));
 
 
-            bundles.Add(new StyleBundle("~/Content/css").Include(
+            bundles.Add(new StyleBundle("~/Theming/css").Include(
                 "~/Content/css/bootstrap.css",
                 "~/Content/css/font-awesome.css",
                 "~/Content/css/bootstrap-theme.css"
                 ));
 
 
-            bundles.Add(new StyleBundle("~/Content/style").Include(
+            bundles.Add(new StyleBundle("~/Theming/style").Include(
              "~/Content/css/style.css"
                 ));
 
