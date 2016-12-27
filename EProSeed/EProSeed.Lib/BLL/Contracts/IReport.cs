@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using EProSeed.Models;
 
 namespace EProSeed.Lib.BLL.Contracts
 {
@@ -10,7 +11,7 @@ namespace EProSeed.Lib.BLL.Contracts
     {
         int CountInductees(int batchId);
 
-        float BatchAverage(int batchId);
+        ReportModel GetReport(int batchId, int inducteeId);
 
         string TrainerName(int batchId);      
     }

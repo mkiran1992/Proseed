@@ -45,50 +45,47 @@ namespace EProSeed.Lib.BLL.Repository
             }
         }
 
-        public float BatchAverage(int batchId)
+        public ReportModel GetReport(int batchId, int indcuteeId)
         {
-            float avg = 0;
-            int property = 0;
-            List<int> propertyInductee = new List<int>();
-            List<float> sumOfInducteeRating = new List<float>();
-
-            try
+            List<DateTime> dates = db.BatchDates.Where(d => d.BatchID == batchId).OrderBy(n => n.BatchDate).Select(n => n.BatchDate).ToList();
+            List<InducteeModel> inductees = db.Inductee.Where(m => m.BatchID == batchId).ToList();
+            InducteeModel selectedInductee = indcuteeId >= 0 ? inductees.Find(n => n.Id == indcuteeId) : null;
+            float batchSum = 0.0F;
+            ReportModel reportModel = new ReportModel()
             {
-                List<int> countInductee = db.Inductee.Where(m => m.BatchID == batchId).Select(m => m.Id).ToList();
+                TrainerName = TrainerName(batchId),
+                BatchId = batchId,
+                InducteeId = indcuteeId,
+                NumberofInductees = inductees.Count,
+                InducteeName = selectedInductee != null ? selectedInductee.Name : "",
+                FeedBacks = new List<ReportFeedbackModel>()
+            };
+            foreach (InducteeModel inductee in inductees)
+            {
+                var feedBacks = db.Feedback.Where(m => m.InducteeID == inductee.Id).ToList();
+                foreach (DateTime date in dates)
+                {
+                    var feedBack = feedBacks.FirstOrDefault(p => p.FeedbackDate.Date == date);
+                    float sum = 0.0F;
+                    if (feedBack != null)
+                    {
+                        PropertyModel property = db.Property.FirstOrDefault(p => p.ID == feedBack.PropertyId);
+                        if (property != null)
+                            sum = (property.PassionForClientSuccessRating + property.FocusOnQualityRating + property.CommunicationRating + property.TransparencyRating + property.OwnerShipRating
+                                   + property.TeamPlayerRating + property.CommitmentRating + property.DisciplineRating + property.EnergyRating + property.TechnicalCompetencyRating) / 10.0F;
+                            batchSum += sum;
 
-                if(countInductee.Count != 0)
-                {
-                    foreach (int item in countInductee)
-                    {
-                        property = db.Feedback.Distinct().Where(m => m.InducteeID == item).Select(m => m.PropertyId).FirstOrDefault();
-                        propertyInductee.Add(property);
                     }
-                }    
-                          
-                if(propertyInductee.Count!=0)
-                {
-                    foreach (int inductee in propertyInductee)
-                    {
-                        PropertyModel Properties = db.Property.Where(P => P.ID == inductee).Select(P => P).SingleOrDefault();
-                        int sumforInductee = Properties.PassionForClientSuccessRating + Properties.FocusOnQualityRating + Properties.CommunicationRating + Properties.TransparencyRating + Properties.OwnerShipRating + Properties.TeamPlayerRating + Properties.CommitmentRating + Properties.DisciplineRating + Properties.EnergyRating + Properties.TechnicalCompetencyRating;
-                        int noOfDays = db.BatchDates.Where(d => d.BatchID == batchId).Count();
-                        float avgPerInductee = ((float)sumforInductee /(noOfDays));
-                        sumOfInducteeRating.Add(avgPerInductee);
-                    }
-                }  
-                            
-                if(sumOfInducteeRating.Count!=0)
-                {
-                    float finalSum = sumOfInducteeRating.Sum();
-                    avg = finalSum / countInductee.Count;
+                    if (selectedInductee != null && inductee.Id == selectedInductee.Id)
+                        reportModel.FeedBacks.Add(new ReportFeedbackModel()
+                        {
+                            Date = date,
+                            Score = sum
+                        });
                 }
-               
-                return avg;
             }
-            catch(Exception e)
-            {
-                throw new Exception(e.Message);
-            }            
+            reportModel.BatchAverage = batchSum / reportModel.NumberofInductees;
+            return reportModel;
         }
     }
 }

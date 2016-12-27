@@ -13,10 +13,22 @@ namespace EProSeed.Models
         [Required(ErrorMessage = "Batch Name is required.")]
         public int BatchId { get; set; }
 
+        public int InducteeId { get; set; }
+
         public string TrainerName { get; set; }
 
         public int NumberofInductees { get; set; }
 
         public float BatchAverage { get; set; }
+
+        public string InducteeName { get; set; }
+
+        public List<ReportFeedbackModel> FeedBacks { get; set; }
+    }
+
+    public class ReportFeedbackModel
+    {
+        public DateTime Date { get; set; }
+        public float Score { get; set; }
     }
 }

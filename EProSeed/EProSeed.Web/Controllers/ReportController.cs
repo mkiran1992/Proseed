@@ -17,27 +17,37 @@ namespace EProSeed.Web.Controllers
 
         protected readonly IBatch BatchRepo;
         protected readonly IReport ReportRepo;
+        protected readonly IInductee IndcuteeRepo;
 
         public ReportController()
         {
             BatchRepo = new Batch();
             ReportRepo = new Report();
+            IndcuteeRepo = new Inductee();
         }
 
         public ActionResult Index()
         {
             var batchList = BatchRepo.GetAll();
             ViewBag.Batch = new SelectList(batchList, "Id", "Name");
+            var inductees = new List<InducteeModel>();
+            ViewBag.Inductees = new SelectList(inductees, "Id", "Name");
             return View("Report");
         }
 
-        [HttpGet]
-        public ActionResult ViewReport(int batchId)
+        [HttpPost]
+        public JsonResult GetIndcutees(int batchId)
         {
-            var report = new ReportModel();
-            report.TrainerName = ReportRepo.TrainerName(batchId);
-            report.NumberofInductees = ReportRepo.CountInductees(batchId);
-            report.BatchAverage = ReportRepo.BatchAverage(batchId);
+            var inductees = new List<InducteeModel>() { new InducteeModel() { Id = -1, Name = "All" } };
+            if (batchId > 0)
+                inductees.AddRange(IndcuteeRepo.InducteesByBatch(batchId));
+            return Json(inductees.Select(n => new { Id = n.Id, Name = n.Name }).ToList() , JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public ActionResult ViewReport(int batchId, int inducteeId)
+        {
+            ReportModel report = ReportRepo.GetReport(batchId, inducteeId);
             return PartialView("_ReportPartial", report);
         }
     }

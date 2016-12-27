@@ -5,32 +5,37 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<script src="~/Scripts/Report.js"></script>
+
 <div class="col-md-12">
  @using (Html.BeginForm())
  {
     @Html.AntiForgeryToken()
     
         <div class="form-group">
-            <label>Trainer</label>
+            <label>Batch:</label>
             @Html.DropDownListFor(m => m.BatchId, ViewBag.Batch as SelectList,
             "Select Batch", new
              {
                  @class = "form-control",                
-             })      
-
-          @Html.ValidationMessageFor(m=>m.BatchId)          
-
+             })
+            
+            @Html.ValidationMessageFor(m=>m.BatchId)
+            <br />
+            <br />
+            <label>Trainee:</label>
+            @Html.DropDownListFor(m => m.InducteeId, ViewBag.Inductees as SelectList,
+            "Select Trainee", new
+             {
+                 @class = "form-control",                
+             })
         </div>
-
-
-        <input type="submit" class="btn btn-success" value="Submit" id="btnSubmit" />
-        
+        <hr />   
         <div id="reportPartial">
         </div>
  }
 
 </div>
 
-<script type="text/javascript" src="~/Scripts/Report.js"></script>
 
 
