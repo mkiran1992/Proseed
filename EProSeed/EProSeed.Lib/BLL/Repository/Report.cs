@@ -63,6 +63,7 @@ namespace EProSeed.Lib.BLL.Repository
             foreach (InducteeModel inductee in inductees)
             {
                 var feedBacks = db.Feedback.Where(m => m.InducteeID == inductee.Id).ToList();
+                float inudcteeSum = 0.0F;
                 foreach (DateTime date in dates)
                 {
                     var feedBack = feedBacks.FirstOrDefault(p => p.FeedbackDate.Date == date);
@@ -73,7 +74,7 @@ namespace EProSeed.Lib.BLL.Repository
                         if (property != null)
                             sum = (property.PassionForClientSuccessRating + property.FocusOnQualityRating + property.CommunicationRating + property.TransparencyRating + property.OwnerShipRating
                                    + property.TeamPlayerRating + property.CommitmentRating + property.DisciplineRating + property.EnergyRating + property.TechnicalCompetencyRating) / 10.0F;
-                            batchSum += sum;
+                            inudcteeSum += sum;
 
                     }
                     if (selectedInductee != null && inductee.Id == selectedInductee.Id)
@@ -83,6 +84,10 @@ namespace EProSeed.Lib.BLL.Repository
                             Score = sum
                         });
                 }
+                float inudcteeAvg = inudcteeSum / dates.Count;
+                batchSum += inudcteeAvg;
+                if (selectedInductee != null && inductee.Id == selectedInductee.Id)
+                    reportModel.InducteeAverage = inudcteeAvg;
             }
             reportModel.BatchAverage = batchSum / reportModel.NumberofInductees;
             return reportModel;

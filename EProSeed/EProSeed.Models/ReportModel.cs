@@ -21,6 +21,8 @@ namespace EProSeed.Models
 
         public float BatchAverage { get; set; }
 
+        public float InducteeAverage { get; set; }
+
         public string InducteeName { get; set; }
 
         public List<ReportFeedbackModel> FeedBacks { get; set; }
