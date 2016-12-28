@@ -59,8 +59,8 @@
     <Compile Include="BLL\Repository\TrainerFeedback.cs" />
     <Compile Include="BLL\Repository\Inductee.cs" />
     <Compile Include="BLL\Repository\Feedback.cs" />
-    <Compile Include="BLL\Repository\ITrainer.cs" />
-    <Compile Include="BLL\Contracts\Trainer.cs" />
+    <Compile Include="BLL\Repository\Trainer.cs" />
+    <Compile Include="BLL\Contracts\ITrainer.cs" />
     <Compile Include="BLL\Repository\Report.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
