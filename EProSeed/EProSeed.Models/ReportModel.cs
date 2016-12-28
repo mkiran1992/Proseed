@@ -19,9 +19,9 @@ namespace EProSeed.Models
 
         public int NumberofInductees { get; set; }
 
-        public float BatchAverage { get; set; }
+        public Decimal BatchAverage { get; set; }
 
-        public float InducteeAverage { get; set; }
+        public Decimal InducteeAverage { get; set; }
 
         public string InducteeName { get; set; }
 
@@ -31,6 +31,6 @@ namespace EProSeed.Models
     public class ReportFeedbackModel
     {
         public DateTime Date { get; set; }
-        public float Score { get; set; }
+        public Decimal Score { get; set; }
     }
 }

@@ -47,10 +47,10 @@ namespace EProSeed.Lib.BLL.Repository
 
         public ReportModel GetReport(int batchId, int indcuteeId)
         {
-            List<DateTime> dates = db.BatchDates.Where(d => d.BatchID == batchId).OrderBy(n => n.BatchDate).Select(n => n.BatchDate).ToList();
+            List<DateTime> dates = db.BatchDates.Where(d => d.BatchID == batchId && d.BatchDate <= DateTime.Now).OrderBy(n => n.BatchDate).Select(n => n.BatchDate).ToList();
             List<InducteeModel> inductees = db.Inductee.Where(m => m.BatchID == batchId).ToList();
             InducteeModel selectedInductee = indcuteeId >= 0 ? inductees.Find(n => n.Id == indcuteeId) : null;
-            float batchSum = 0.0F;
+            Decimal batchSum = 0.0M;
             ReportModel reportModel = new ReportModel()
             {
                 TrainerName = TrainerName(batchId),
@@ -63,17 +63,17 @@ namespace EProSeed.Lib.BLL.Repository
             foreach (InducteeModel inductee in inductees)
             {
                 var feedBacks = db.Feedback.Where(m => m.InducteeID == inductee.Id).ToList();
-                float inudcteeSum = 0.0F;
+                Decimal inudcteeSum = 0.0M;
                 foreach (DateTime date in dates)
                 {
                     var feedBack = feedBacks.FirstOrDefault(p => p.FeedbackDate.Date == date);
-                    float sum = 0.0F;
+                    Decimal sum = 0.0M;
                     if (feedBack != null)
                     {
                         PropertyModel property = db.Property.FirstOrDefault(p => p.ID == feedBack.PropertyId);
                         if (property != null)
                             sum = (property.PassionForClientSuccessRating + property.FocusOnQualityRating + property.CommunicationRating + property.TransparencyRating + property.OwnerShipRating
-                                   + property.TeamPlayerRating + property.CommitmentRating + property.DisciplineRating + property.EnergyRating + property.TechnicalCompetencyRating) / 10.0F;
+                                   + property.TeamPlayerRating + property.CommitmentRating + property.DisciplineRating + property.EnergyRating + property.TechnicalCompetencyRating) / 10.0M;
                             inudcteeSum += sum;
 
                     }
@@ -84,12 +84,12 @@ namespace EProSeed.Lib.BLL.Repository
                             Score = sum
                         });
                 }
-                float inudcteeAvg = inudcteeSum / dates.Count;
+                Decimal inudcteeAvg = Math.Round(inudcteeSum / dates.Count, 2);
                 batchSum += inudcteeAvg;
                 if (selectedInductee != null && inductee.Id == selectedInductee.Id)
                     reportModel.InducteeAverage = inudcteeAvg;
             }
-            reportModel.BatchAverage = batchSum / reportModel.NumberofInductees;
+            reportModel.BatchAverage = Math.Round(batchSum / reportModel.NumberofInductees);
             return reportModel;
         }
     }
