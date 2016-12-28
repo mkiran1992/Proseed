@@ -11,10 +11,12 @@ namespace EProSeed.Web.Controllers
     {
         protected readonly ITrainerFeedback TrainerFeedbackRepo;
         protected readonly IBatch BatchRepo;
+        protected readonly IInductee _Inductee;
         public TrainerFeedbackController()
         {
             TrainerFeedbackRepo = new TrainerFeedback();
             BatchRepo = new Batch();
+            _Inductee = new Inductee();
         }
         public TrainerFeedbackController(ITrainerFeedback trainerFeedbackRepo, IBatch batchRepo)
         {
@@ -43,13 +45,15 @@ namespace EProSeed.Web.Controllers
             string currentUserId = Session["UserId"] == null ? string.Empty : Session["UserId"].ToString();
             var userType = Session["UserType"] == null ? UserType.None.ToString() : Session["UserType"].ToString();
             var trainerFeedbackList = new CustomTrainerFeedbackModel();
+            string currentUserMailId = Session["UserEmailId"] == null ? string.Empty : Session["UserEmailId"].ToString();
+            var batchId = _Inductee.FindByEmail(currentUserMailId);
             if (userType == UserType.Trainer.ToString())
             {
                 trainerFeedbackList = TrainerFeedbackRepo.GetTrainerFeedbackList(id);
             }
             else if (userType == UserType.Trainee.ToString())
             {
-                trainerFeedbackList = TrainerFeedbackRepo.GetTrainerFeedbackListForTrainer(id, currentUserId);
+                trainerFeedbackList = TrainerFeedbackRepo.GetTrainerFeedbackListForTrainer(batchId.BatchID, currentUserId);
             }
 
             TempData["CurrentBatchID"] = id;
@@ -59,13 +63,15 @@ namespace EProSeed.Web.Controllers
         public ActionResult Create()
         {
             TrainersFeedbackModel model = new TrainersFeedbackModel();
-            if (TempData["CurrentBatchID"] == null)
+            string currentUserMailId = Session["UserEmailId"] == null ? string.Empty : Session["UserEmailId"].ToString();
+            var batchId = _Inductee.FindByEmail(currentUserMailId);
+            if (batchId==null)
             {
                 return RedirectToAction("Index");
             }
             else
             {
-                model.BatchID = (int)TempData.Peek("CurrentBatchID");
+                model.BatchID = batchId.BatchID;
             }
             return View(model);
         }

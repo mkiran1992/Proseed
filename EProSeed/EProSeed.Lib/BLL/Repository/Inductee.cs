@@ -133,7 +133,18 @@ namespace EProSeed.Lib.BLL
                 throw new Exception(ex.Message);
             }
         }
+        public InducteeModel FindByEmail(string _email)
+        {
+            try
+            {
+               return db.Inductee.Where(I => I.Email == _email).FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
 
-        
+
     }
 }

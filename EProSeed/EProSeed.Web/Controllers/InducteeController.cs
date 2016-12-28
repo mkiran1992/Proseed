@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using EProSeed.Models;
+using MyNamespace.Filters;
 
 namespace EProSeed.Web.Controllers
 {
@@ -52,7 +53,7 @@ namespace EProSeed.Web.Controllers
                         {
                             Email = Inductee.Email,
                             Name = Inductee.Name,
-                            Password = "123"
+                            Password = System.Web.Security.Membership.GeneratePassword(8, 6)
                         };
                         int trainerid = new Trainer().Create(trainerModel);
                         var user_type_model = new Trainer_UserType_Map_Model()
@@ -117,7 +118,7 @@ namespace EProSeed.Web.Controllers
             return View(Inductee);
         }
 
-
+        [ValidateHeaderAntiForgeryTokenAttribute]
         public ActionResult Delete(int? id)
         {
             if (id == null)

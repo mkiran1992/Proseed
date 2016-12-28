@@ -20,6 +20,7 @@ namespace EProSeed.Lib.BLL
 
         IList<InducteeModel> InducteesByBatch(int? BatchId);
         IList<InducteeModel> FindByEmp(string _EmpID);
+        InducteeModel FindByEmail(string _email);
 
         InducteeModel Get(string mailId);
 

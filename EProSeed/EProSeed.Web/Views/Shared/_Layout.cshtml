@@ -103,6 +103,8 @@
                     </a>
                     <b class="arrow"></b>
                 </li>
+                @if (Session["UserType"] != null & Convert.ToString(Session["UserType"]) == "Trainer")
+                {
                 <li>
                     <a href="@Url.Action("Index", "Report")">
                         <i class="menu-icon fa fa-area-chart"></i>
@@ -110,6 +112,7 @@
                     </a>
                     <b class="arrow"></b>
                 </li>
+                }
                 @*<li class="">
                         <a href="#">
                             <i class="menu-icon fa fa-picture-o"></i>
