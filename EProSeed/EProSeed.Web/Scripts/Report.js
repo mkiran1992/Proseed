@@ -2,7 +2,7 @@
 
 
 $(document).ready(function () {
-    $('#BatchId').change(function (e) {
+    $('#BatchId').change(function () {
         var batchId = $(this).val();
         $("#reportPartial").html("")
         var html = "<option value=''>Select Trainee</option>";
@@ -14,7 +14,6 @@ $(document).ready(function () {
                 data: { batchId: batchId },
                 dataType: "json",
                 success: function (data) {
-                    debugger;
                     for (var i in data) {
                         html += "<option value='" + data[i].Id + "'>" + data[i].Name + "</option>";
                     }
@@ -38,10 +37,10 @@ $(document).ready(function () {
                 type: "GET",
                 data: { batchId: batchId, inducteeId: inducteeId },
                 dataType: "html",
-                success: function (data, text) {
+                success: function (data) {
                     $("#reportPartial").html(data);
                 },
-                error: function (xhr, ajaxOptions, thrownError) {
+                error: function () {
                     alert('Error');
                 }
             });
