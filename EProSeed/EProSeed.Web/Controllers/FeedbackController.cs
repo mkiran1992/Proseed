@@ -29,7 +29,7 @@ namespace EProSeed.Web.Controllers
         //
         // GET: /Feedback/of/<inducteeID>
 
-        public ActionResult of(int? id)
+        public ActionResult Of(int? id)
         {
             var Inductee = InducteeRepo.Find(id);
             return View(Inductee);
@@ -40,20 +40,10 @@ namespace EProSeed.Web.Controllers
 
         public ActionResult Create(int? id)
         {
-            vmFeedBack objFeedback = new vmFeedBack();
+            vmFeedBack objFeedback;
             if (id == null)
                 return HttpNotFound();
-
-            try
-            {
-                objFeedback = FillFeedBackViewModel(id);
-
-
-            }
-            catch (Exception ex)
-            {
-
-            }
+            objFeedback = FillFeedBackViewModel(id);
 
             return View(objFeedback);
         }
@@ -64,11 +54,7 @@ namespace EProSeed.Web.Controllers
         [ValidateInput(true)]
         public ActionResult Create(vmFeedBack feedback)
         {
-            vmFeedBack objFeedback = new vmFeedBack();
-
-            objFeedback = FillFeedBackViewModel(feedback.InducteeID);
-
-
+           FillFeedBackViewModel(feedback.InducteeID);
             if (ModelState.IsValid)
             {
                 FeedbackModel dbFeedback = new FeedbackModel();
@@ -122,7 +108,6 @@ namespace EProSeed.Web.Controllers
                 }
             }
             return Redirect("/feedback/of/" + feedback.InducteeID);
-            //return View(objFeedback);
         }
 
         #endregion
@@ -207,7 +192,6 @@ namespace EProSeed.Web.Controllers
                 }
             }
             return Redirect("/feedback/of/" + feedbackProperty.InducteeID);
-            //   return View(feedbackProperty);
         }
 
         #endregion
@@ -218,9 +202,8 @@ namespace EProSeed.Web.Controllers
             if (id == null)
                 return HttpNotFound();
 
-            var res = FeedbackRepo.Delete(id);
+         FeedbackRepo.Delete(id);
             return Redirect("/feedback/of/" + InducteeId);
-            //return Redirect("/");
         }
 
 
@@ -243,20 +226,6 @@ namespace EProSeed.Web.Controllers
         }
 
 
-        private void SetDate(DateTime StartDate, DateTime EndDate)
-        {
-            TimeSpan t = EndDate - StartDate;
-            int NrOfDays = Convert.ToInt32(t.TotalDays);
-            List<string> _date = new List<string>();
-
-            for (int i = 0; i <= NrOfDays; i++)
-            {
-                var _Date = StartDate.AddDays(i);
-                _date.Add(_Date.ToShortDateString());
-            }
-
-            ViewBag.FeedbackDate = new SelectList(_date);
-        }
 
 
 

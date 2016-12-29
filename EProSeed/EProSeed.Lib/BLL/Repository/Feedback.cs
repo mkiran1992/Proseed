@@ -22,13 +22,11 @@ namespace EProSeed.Lib.BLL
             try
             {
                 db.Feedback.Add(Feedback);
-                if (db.SaveChanges() > 0)
-                    return true;
-                return false;
+                return db.SaveChanges() > 0;
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw ex;
             }
         }
 
@@ -41,12 +39,11 @@ namespace EProSeed.Lib.BLL
                 throw new Exception("Select valid Trainee");
             try
             {
-                FeedbackModel feedback = db.Feedback.Find(id);
-                return feedback;
+                return db.Feedback.Find(id);
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw ex;
             }
         }
 
@@ -58,14 +55,13 @@ namespace EProSeed.Lib.BLL
                 if (feedback != null)
                 {
                     db.Entry(feedback).State = EntityState.Modified;
-                    if (db.SaveChanges() > 0)
-                        return true;
+                    return db.SaveChanges() > 0;
 
                 }
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw ex;
             }
 
             return false;
@@ -79,21 +75,16 @@ namespace EProSeed.Lib.BLL
             try
             {
                 FeedbackModel feedback = db.Feedback.Find(id);
-                //  DeleteProperty(feedback.PropertyId);
-                //feedback = db.Feedback.Find(id);
                 if (feedback != null)
                 {
                     db.Property.Remove(feedback.Property);
                     db.Feedback.Remove(feedback);
-                    if (db.SaveChanges() > 0)
-                        return true;
-
-
+                    return db.SaveChanges() > 0;
                 }
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw ex;
             }
             return false;
         }
@@ -116,14 +107,12 @@ namespace EProSeed.Lib.BLL
 
 
                     db.Entry(Property).State = EntityState.Modified;
-                    if (db.SaveChanges() > 0)
-                        return true;
-
+                    return db.SaveChanges() > 0;
                 }
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw ex;
             }
 
             return false;
@@ -141,15 +130,12 @@ namespace EProSeed.Lib.BLL
                 if (property != null)
                 {
                     db.Property.Remove(property);
-                    if (db.SaveChanges() > 0)
-                        return true;
-
-
+                    return db.SaveChanges() > 0;
                 }
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw ex;
             }
             return false;
         }

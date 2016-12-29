@@ -24,49 +24,32 @@ namespace EProSeed.Web.Controllers
         {
             vmDashBoard objDashboard = new vmDashBoard();
             var batch = _Batch.GetAll();
-            if (batch != null && batch.Count() > 0)
+            if (batch != null && batch.Any())
             {
-                try
-                {
-                    int CurrentUserId = Convert.ToInt32(Session["UserId"]);
-                    EProSeed.Lib.BLL.UserType CurrentUserType = UserType.None;
-                    bool GotCurrentUser = Enum.TryParse<EProSeed.Lib.BLL.UserType>(Session["UserType"].ToString(), out CurrentUserType);
-                    string CurrentUserEmail = Session["UserEmailId"].ToString();
+                UserType CurrentUserType ;
+                bool GotCurrentUser = Enum.TryParse<EProSeed.Lib.BLL.UserType>(Session["UserType"].ToString(), out CurrentUserType);
+                string CurrentUserEmail = Session["UserEmailId"].ToString();
 
-                    if (GotCurrentUser)
+                if (GotCurrentUser)
+                {
+                    if (CurrentUserType == UserType.Trainer)
                     {
-                        if (CurrentUserType == UserType.Trainer)
+                        objDashboard.BatchList = batch;
+                        var LastBatchID = batch.LastOrDefault().Id;
+                        var IndList = _Inductee.Get(20, 0);
+                        objDashboard.InducteeList = IndList.Where(i => i.BatchID == LastBatchID).OrderByDescending(i => i.Batch.BatchDates.OrderBy(f => f.BatchDate).First()).ToList();
+                    }
+                    else if (CurrentUserType == UserType.Trainee)
+                    {
+                        var inducteeBatchId = _Inductee.Get(CurrentUserEmail).BatchID;
+                        var traineesBatch = batch.Where(B => B.Id == inducteeBatchId).Select(B => B).ToList<BatchModel>();
+                        if (traineesBatch.Any())
                         {
-                            objDashboard.BatchList = batch;
-                            var LastBatchID = batch.LastOrDefault().Id;
+                            objDashboard.BatchList = traineesBatch;
                             var IndList = _Inductee.Get(20, 0);
-                            objDashboard.InducteeList = IndList.Where(i => i.BatchID == LastBatchID).OrderByDescending(i => i.Batch.BatchDates.OrderBy(f=>f.BatchDate).First()).ToList();
-                        }
-                        else if (CurrentUserType == UserType.Trainee)
-                        {
-                            var inducteeBatchId = _Inductee.Get(CurrentUserEmail).BatchID;
-                            var traineesBatch = batch.Where(B => B.Id == inducteeBatchId).Select(B => B).ToList<BatchModel>();
-                            if (traineesBatch.Count() > 0)
-                            {
-                                objDashboard.BatchList = traineesBatch;
-                                var LastBatchID = batch.LastOrDefault().Id;
-                                var IndList = _Inductee.Get(20, 0);
-                                objDashboard.InducteeList = IndList.Where(i => i.BatchID == inducteeBatchId).OrderByDescending(i => i.Id).ToList();
-                            }
+                            objDashboard.InducteeList = IndList.Where(i => i.BatchID == inducteeBatchId).OrderByDescending(i => i.Id).ToList();
                         }
                     }
-                    else
-                    {
-
-                        //objDashboard.BatchList = batch;
-                        //var LastBatchID = batch.LastOrDefault().Id;
-                        //var IndList = _Inductee.Get(20, 0);
-                        //objDashboard.InducteeList = IndList.Where(i => i.BatchID == LastBatchID).OrderByDescending(i => i.Id).ToList();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    // handle here
                 }
             }
 

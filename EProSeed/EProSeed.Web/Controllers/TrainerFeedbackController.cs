@@ -98,11 +98,10 @@ namespace EProSeed.Web.Controllers
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 ViewData["ErrorMsg"] = "Failed to create feedback for trainer.";
             }
-            //return View(model);
             return RedirectToAction("TrainerFeedback", new { id = model.BatchID });
         }
 

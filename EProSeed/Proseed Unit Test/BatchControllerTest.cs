@@ -4,11 +4,7 @@ using EProSeed.Web.Controllers;
 using EProSeed.Web.Models;
 using Moq;
 using NUnit.Framework;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web.Mvc;
 
 namespace Proseed_Unit_Test
@@ -57,7 +53,6 @@ namespace Proseed_Unit_Test
             _batch.TrainerId = 1;
             _batch.trainer = new TrainerModel();
             _batch.Name = "Knight Riders";
-            IList<BatchModel> batchList = new List<BatchModel>();
             var controller = new BatchController(_batchRepo, _trainerRepo);
             ViewResult result= controller.Create(_batch) as ViewResult;
             Assert.AreEqual("The Batch already exists with the same name.", result.ViewData["ErrorMsg"]);

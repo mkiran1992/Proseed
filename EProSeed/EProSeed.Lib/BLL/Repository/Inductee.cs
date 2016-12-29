@@ -30,14 +30,11 @@ namespace EProSeed.Lib.BLL
             try
             {
                 db.Inductee.Add(Inductee);
-                if (db.SaveChanges() > 0)
-                    return true;
-                else
-                    return false;
+                return db.SaveChanges() > 0;
             }
             catch(Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw ex;
             }
         }
         public InducteeModel Get(string mailId)
@@ -57,14 +54,13 @@ namespace EProSeed.Lib.BLL
                 if(Inductee !=null)
                 {
                     db.Inductee.Remove(Inductee);
-                    if (db.SaveChanges() > 0)
-                        return true;
+                    return db.SaveChanges() > 0;
                 }
                return false;
             }
             catch(Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw ex;
             }
         }
 
@@ -75,28 +71,26 @@ namespace EProSeed.Lib.BLL
                 throw new Exception("Select valid Trainee");
             try
             {
-                InducteeModel batch = db.Inductee.Find(id);
-                return batch;
+                return db.Inductee.Find(id);
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw ex;
             }
         }
 
 
-        public IList<InducteeModel> InducteesByBatch(int? BatchId)
+        public IList<InducteeModel> InducteesByBatch(int? batchId)
         {
-            if (BatchId == null)
+            if (batchId == null)
                 throw new Exception("Select valid Trainee");
             try
             {
-                var  InducteesList = db.Inductee.Where(i=>i.Batch.Id== BatchId).ToList();
-                return InducteesList;
+                return db.Inductee.Where(i=>i.Batch.Id== batchId).ToList();
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw ex;
             }
         }
 
@@ -108,13 +102,12 @@ namespace EProSeed.Lib.BLL
                 if (Inductee != null)
                 {
                     db.Entry(Inductee).State = EntityState.Modified;
-                    if (db.SaveChanges() > 0)
-                        return true;
+                    return db.SaveChanges() > 0;
                 }
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw ex;
             }
             return false;
         }
@@ -125,12 +118,11 @@ namespace EProSeed.Lib.BLL
             
             try
             {
-                var Ind = db.Inductee.Where(I=>I.EmpId ==_EmpID);
-                return Ind.ToList();
+                return db.Inductee.Where(I=>I.EmpId ==_EmpID).ToList();
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw ex;
             }
         }
         public InducteeModel FindByEmail(string _email)

@@ -42,7 +42,7 @@ namespace EProSeed.Web.Controllers
             return View();
         }
 
-        private BatchModel _get_batch(Models.vmBatch batchModel)
+        private BatchModel GetBatch(Models.vmBatch batchModel)
         {
             var batch = new BatchModel
             {
@@ -59,10 +59,9 @@ namespace EProSeed.Web.Controllers
         [ValidateInput(true)]
         public ActionResult Create(Models.vmBatch batchModel)
         {
-            var batch = _get_batch(batchModel);
+            var batch = GetBatch(batchModel);
             try
             {
-                //batch.TrainerId = Convert.ToInt32(User.Identity.Name);
                 if (ModelState.IsValid)
                 {
 
@@ -77,7 +76,7 @@ namespace EProSeed.Web.Controllers
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 ViewData["ErrorMsg"] = "Failed to create batch.";
             }
@@ -118,7 +117,7 @@ namespace EProSeed.Web.Controllers
         [ValidateInput(true)]
         public ActionResult Edit(Models.vmBatch batchModel)
         {
-            var batch = _get_batch(batchModel);
+            var batch = GetBatch(batchModel);
             batch.BatchDates = null;
             try
             {
@@ -134,14 +133,13 @@ namespace EProSeed.Web.Controllers
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 ViewData["ErrorMsg"] = "Failed to update batch.";
             }
             var TrainerList = TrainerRepo.GetAll();
             ViewBag.Trainers = new SelectList(TrainerList, "Id", "Name", batch.TrainerId);
             return Redirect("/batch");
-            //  return View(batch);
         }
 
         public ActionResult Delete(int? id)
@@ -150,7 +148,7 @@ namespace EProSeed.Web.Controllers
             {
                 BatchRepo.DeleteConfirmed(id);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 ViewData["ErrorMsg"] = "Failed to delete batch.";
             }
