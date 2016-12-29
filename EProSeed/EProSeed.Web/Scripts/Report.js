@@ -15,12 +15,15 @@ $(document).ready(function () {
                 dataType: "json",
                 success: function (data) {
                     for (var i in data) {
-                        html += "<option value='" + data[i].Id + "'>" + data[i].Name + "</option>";
+                        if (data.hasOwnProperty(i)) {
+                            html += "<option value='" + data[i].Id + "'>" + data[i].Name + "</option>";
+                        }
+                        
                     }
                     $('#InducteeId').html(html);
                 },
                 error: function () {
-                    alert('Error');
+                    console.log("Error during fetching the inductees.");
                 }
             });
         }
