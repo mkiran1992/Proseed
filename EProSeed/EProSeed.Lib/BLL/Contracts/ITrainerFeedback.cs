@@ -9,11 +9,9 @@ namespace EProSeed.Lib.BLL
 {
     public interface ITrainerFeedback
     {
-        //  IList<TrainerFeedbackQuestionModel> GetTrainerFeedbackQuestions();
         IList<TrainerModel> GetTrainerList();
         CustomTrainerFeedbackModel GetTrainerFeedbackList(int batchId);
         CustomTrainerFeedbackModel GetTrainerFeedbackListForTrainer(int batchId, string traineeId);
-        // IList<TrainerFeedbackQuestionModel> GetFeedbackQuestions();   
         TrainersFeedbackModel GetTrainerFeedback(int Id);
 
         bool Create(TrainersFeedbackModel model);

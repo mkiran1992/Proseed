@@ -23,13 +23,12 @@ $(document).ready(function () {
                     $('#InducteeId').html(html);
                 },
                 error: function () {
-                    console.log("Error during fetching the inductees.");
                 }
             });
         }
     });
 
-    $('#InducteeId').change(function (e) {
+    $('#InducteeId').change(function () {
         var batchId = $('#BatchId :selected').val();
         var inducteeId = $('#InducteeId :selected').val()
         $("#reportPartial").html("");
@@ -44,7 +43,6 @@ $(document).ready(function () {
                     $("#reportPartial").html(data);
                 },
                 error: function () {
-                    alert('Error');
                 }
             });
         }

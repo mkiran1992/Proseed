@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace EProSeed.Lib.BLL
 {
-    public enum UserType : int
+    public enum UserType
     {
         None = 0,
         Trainer = 1,

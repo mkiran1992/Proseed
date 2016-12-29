@@ -39,10 +39,8 @@
     editBatchDatesCalendar.on('changeDate', on_date_change)
     $('[data-toggle="tooltip"]').tooltip();
 
-    //   Feedback.toggle();
     Feedback.toggleRow();
     dashboard.ShowBatchName();
-    debugger;
     slider.showSlider();
 });
 
@@ -71,20 +69,9 @@ Feedback = {
 
             $(this).toggleClass('HideFeedback');
 
-            //   $(this).unbind("click");
 
         });
 
-        //$("body").on("click", ".HideFeedback", function () {
-
-        //    var target = $(this).attr('data-rowTarget');
-        //    var value = $(this).attr('data-targetVal');
-        //    $(target).slideUp();
-        //  //  $(target + " td").html(value);
-        //    $(this).toggleClass('HideFeedback toggleMyData');
-        //    // $(this).bind("click");
-        //    return 0;
-        //});
 
 
     }
@@ -96,7 +83,6 @@ Feedback = {
 var dashboard = {}
 dashboard = {
     ShowBatchName: function () {
-        //DashboardBatchName
         var firstBatch = $('.ShowBatchName');
         if (firstBatch && firstBatch.length) {
             $(firstBatch[0]).parents('tr').addClass('success');
@@ -128,7 +114,6 @@ slider = {
         }
     },
     createSlider: function (element) {
-        debugger;
         var connectSlider = document.getElementById('slider-connect-' + element);
         var formElement = document.getElementById(element);
         var rating = 0;
@@ -143,7 +128,6 @@ slider = {
                 start: rating,
                 connect: [true, false],
                 step: 1,
-                //tooltips: true,
                 range: {
                     'min': 0,
                     'max': 10
@@ -154,7 +138,6 @@ slider = {
     },
 
     showSlider: function () {
-        debugger;
         slider.createSlider('PassionForClientSuccess');
         slider.createSlider('FocusOnQuality');
         slider.createSlider('Communication');
