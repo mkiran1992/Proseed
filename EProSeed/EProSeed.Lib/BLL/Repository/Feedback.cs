@@ -19,15 +19,8 @@ namespace EProSeed.Lib.BLL
 
         public bool Create(FeedbackModel Feedback)
         {
-            try
-            {
-                db.Feedback.Add(Feedback);
-                return db.SaveChanges() > 0;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            db.Feedback.Add(Feedback);
+            return db.SaveChanges() > 0;
         }
 
 
@@ -37,31 +30,17 @@ namespace EProSeed.Lib.BLL
         {
             if (id == null)
                 throw new Exception("Select valid Trainee");
-            try
-            {
-                return db.Feedback.Find(id);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            return db.Feedback.Find(id);
         }
 
 
         public bool Update(FeedbackModel feedback)
         {
-            try
+            if (feedback != null)
             {
-                if (feedback != null)
-                {
-                    db.Entry(feedback).State = EntityState.Modified;
-                    return db.SaveChanges() > 0;
+                db.Entry(feedback).State = EntityState.Modified;
+                return db.SaveChanges() > 0;
 
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
             }
 
             return false;
@@ -72,19 +51,12 @@ namespace EProSeed.Lib.BLL
         {
             if (id == null)
                 throw new Exception("Invalid feedback.");
-            try
+            FeedbackModel feedback = db.Feedback.Find(id);
+            if (feedback != null)
             {
-                FeedbackModel feedback = db.Feedback.Find(id);
-                if (feedback != null)
-                {
-                    db.Property.Remove(feedback.Property);
-                    db.Feedback.Remove(feedback);
-                    return db.SaveChanges() > 0;
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
+                db.Property.Remove(feedback.Property);
+                db.Feedback.Remove(feedback);
+                return db.SaveChanges() > 0;
             }
             return false;
         }
@@ -92,27 +64,20 @@ namespace EProSeed.Lib.BLL
 
         public bool UpdateProperty(PropertyModel Property, string Date, int? feedbackID)
         {
-            try
+            if (Property != null)
             {
-                if (Property != null)
+
+                if (Date != null)
                 {
-
-                    if (Date != null)
-                    {
-                        var feedback = Find(feedbackID);
-                        var dt = Convert.ToDateTime(Date);
-                        feedback.FeedbackDate = dt;
-                        db.Entry(feedback).State = EntityState.Modified;
-                    }
-
-
-                    db.Entry(Property).State = EntityState.Modified;
-                    return db.SaveChanges() > 0;
+                    var feedback = Find(feedbackID);
+                    var dt = Convert.ToDateTime(Date);
+                    feedback.FeedbackDate = dt;
+                    db.Entry(feedback).State = EntityState.Modified;
                 }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
+
+
+                db.Entry(Property).State = EntityState.Modified;
+                return db.SaveChanges() > 0;
             }
 
             return false;
@@ -124,18 +89,11 @@ namespace EProSeed.Lib.BLL
         {
             if (id == null)
                 throw new Exception("Invalid feedback.");
-            try
+            var property = db.Property.Find(id);
+            if (property != null)
             {
-                var property = db.Property.Find(id);
-                if (property != null)
-                {
-                    db.Property.Remove(property);
-                    return db.SaveChanges() > 0;
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
+                db.Property.Remove(property);
+                return db.SaveChanges() > 0;
             }
             return false;
         }

@@ -32,7 +32,7 @@ namespace EProSeed.Models
 
         public class FeedbackResponse
         {
-            public int ID { get; set; }
+            public int Id { get; set; }
 
             public string WhatWentWell { get; set; }
 

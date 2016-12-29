@@ -23,34 +23,20 @@ namespace EProSeed.Lib.BLL
         /// <returns></returns>
         public TrainerModel Login(string email, string password)
         {
-            try
-            {
-                var User = db.Tranner.Where(t => t.Email == email && t.Password == password).SingleOrDefault();
-                return User;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            var User = db.Tranner.Where(t => t.Email == email && t.Password == password).SingleOrDefault();
+            return User;
         }
 
         public TrainerModel Login(string email, string password, out UserType userType)
         {
             userType = UserType.None;
-            try
-            {
-                var User = db.Tranner.Where(t => t.Email == email && t.Password == password).SingleOrDefault();
+            var User = db.Tranner.Where(t => t.Email == email && t.Password == password).SingleOrDefault();
 
-                if (User != null)
-                {
-                    userType = (UserType)db.TrainerTraineeUserMapping.Where(M => User.Id == M.Map_Trainer_Id).Select(M => M.Map_UserType_Id).SingleOrDefault();
-                }
-                return User;
-            }
-            catch (Exception ex)
+            if (User != null)
             {
-                throw ex;
+                userType = (UserType)db.TrainerTraineeUserMapping.Where(M => User.Id == M.Map_Trainer_Id).Select(M => M.Map_UserType_Id).SingleOrDefault();
             }
+            return User;
         }
 
         public int Create(TrainerModel trainer)
@@ -62,14 +48,7 @@ namespace EProSeed.Lib.BLL
 
         public string GetName(int id)
         {
-            try
-            {
-                return db.Tranner.Where(t => t.Id == id).SingleOrDefault().Name;
-            }
-            catch (Exception ex)
-            {
-                throw  ex;
-            }
+            return db.Tranner.Where(t => t.Id == id).SingleOrDefault().Name;
 
         }
 
