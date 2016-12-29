@@ -18,50 +18,38 @@ namespace EProSeed.Lib.BLL
         /// <summary>
         /// Avoid to use it, instead use another version.
         /// </summary>
-        /// <param name="Email"></param>
-        /// <param name="Password"></param>
+        /// <param name="email"></param>
+        /// <param name="password"></param>
         /// <returns></returns>
-        public TrainerModel Login(string Email, string Password)
+        public TrainerModel Login(string email, string password)
         {
             try
             {
-                var User = db.Tranner.Where(t => t.Email == Email && t.Password == Password).SingleOrDefault();
-
-                if (User != null)
-                {
-
-                    return User;
-
-                }
-                return null;
+                var User = db.Tranner.Where(t => t.Email == email && t.Password == password).SingleOrDefault();
+                return User;
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw ex;
             }
         }
 
-        public TrainerModel Login(string Email, string Password, out UserType UserType)
+        public TrainerModel Login(string email, string password, out UserType userType)
         {
-            UserType = UserType.None;
+            userType = UserType.None;
             try
             {
-                var User = db.Tranner.Where(t => t.Email == Email && t.Password == Password).SingleOrDefault();
+                var User = db.Tranner.Where(t => t.Email == email && t.Password == password).SingleOrDefault();
 
                 if (User != null)
                 {
-
-                    UserType = (UserType)db.TrainerTraineeUserMapping.Where(M => User.Id == M.Map_Trainer_Id).Select(M => M.Map_UserType_Id).SingleOrDefault();
-
-                    return User;
-
+                    userType = (UserType)db.TrainerTraineeUserMapping.Where(M => User.Id == M.Map_Trainer_Id).Select(M => M.Map_UserType_Id).SingleOrDefault();
                 }
-
-                return null;
+                return User;
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw ex;
             }
         }
 
@@ -76,20 +64,18 @@ namespace EProSeed.Lib.BLL
         {
             try
             {
-                var tranner = db.Tranner.Where(t => t.Id == id).SingleOrDefault();
-                return tranner.Name;
+                return db.Tranner.Where(t => t.Id == id).SingleOrDefault().Name;
             }
-            catch (Exception Ex)
+            catch (Exception ex)
             {
-                throw new Exception(Ex.Message);
+                throw  ex;
             }
 
         }
 
         public TrainerModel Find(int? id)
         {
-            var tranner = db.Tranner.Where(t => t.Id == id).SingleOrDefault();
-            return tranner;
+            return db.Tranner.Where(t => t.Id == id).SingleOrDefault();
         }
 
         public IList<TrainerModel> GetAll()

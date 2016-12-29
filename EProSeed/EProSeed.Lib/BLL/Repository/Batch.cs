@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using EProSeed.DAL;
 using EProSeed.Models;
 using System.Data.Entity;
@@ -12,7 +10,6 @@ namespace EProSeed.Lib.BLL
     public class Batch : IBatch
     {
         protected readonly ProDbContext db;
-        protected readonly IBatch _Batch;
         protected readonly IInductee _Inductee;
         public Batch()
         {
@@ -24,12 +21,11 @@ namespace EProSeed.Lib.BLL
         {
             try
             {
-                var Batch = db.Batch.ToList();
-                return Batch;
+                return db.Batch.ToList();
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw ex;
             }
         }
 
@@ -38,26 +34,20 @@ namespace EProSeed.Lib.BLL
             try
             {
                 var inductee = db.Inductee.FirstOrDefault(i => i.Id.ToString() == traineeId);
-                var batch = db.Batch.Where(b => b.Id == inductee.BatchID).ToList();
-                return batch;
+                return db.Batch.Where(b => b.Id == inductee.BatchID).ToList();
             }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
         }
-        /// <summary>
-        /// Batch Details
-        /// </summary>
-        /// <param name="traineeId"></param>
-        /// <returns>BatchModel</returns>
         public BatchModel GetBatchDetailsByTraineeId(string traineeId)
         {
             int traineeIntId = Convert.ToInt32(traineeId);
             var user = db.Tranner.FirstOrDefault(us=>us.Id== traineeIntId);
 
             var inducteeBatchId = _Inductee.Get(user.Email).BatchID;
-            var traineesBatch = db.Batch.Where(B => B.Id == inducteeBatchId).Select(B => B).ToList<BatchModel>().FirstOrDefault();
+            var traineesBatch = db.Batch.Where(B => B.Id == inducteeBatchId).Select(B => B).ToList().FirstOrDefault();
             try
             {
                 var batchDetails = (from inductee in db.Inductee
@@ -70,7 +60,7 @@ namespace EProSeed.Lib.BLL
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw ex;
             }
         }
 
@@ -82,13 +72,11 @@ namespace EProSeed.Lib.BLL
                 if (batch != null)
                     return false;
                 db.Batch.Add(_batch);
-                if (db.SaveChanges() > 0)
-                    return true;
-                return false;
+                return db.SaveChanges() > 0;
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw ex;
             }
 
 
@@ -101,13 +89,12 @@ namespace EProSeed.Lib.BLL
                 if (batch != null)
                 {
                     db.Entry(batch).State = EntityState.Modified;
-                    if (db.SaveChanges() > 0)
-                        return true;
+                    return db.SaveChanges() > 0;
                 }
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw ex;
             }
             return false;
         }
@@ -119,12 +106,11 @@ namespace EProSeed.Lib.BLL
                 throw new Exception("Select valid Trainee");
             try
             {
-                BatchModel batch = db.Batch.Find(id);
-                return batch;
+                return db.Batch.Find(id);
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw ex;
             }
         }
 
@@ -143,7 +129,7 @@ namespace EProSeed.Lib.BLL
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw ex;
             }
 
             return false;
@@ -164,7 +150,7 @@ namespace EProSeed.Lib.BLL
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw ex;
             }
         }
 
@@ -173,12 +159,11 @@ namespace EProSeed.Lib.BLL
         {
             try
             {
-                var Batch = db.Batch.Where(b => b.Name == Name);
-                return Batch.ToList();
+                return db.Batch.Where(b => b.Name == Name).ToList();
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw ex;
             }
         }
 

@@ -22,13 +22,11 @@ namespace EProSeed.Lib.BLL.Repository
             try
             {
                 db.TrainersFeedback.Add(model);
-                if (db.SaveChanges() > 0)
-                    return true;
-                return false;
+                return db.SaveChanges() > 0;
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw ex;
             }
         }
 
@@ -39,13 +37,12 @@ namespace EProSeed.Lib.BLL.Repository
                 if (model != null)
                 {
                     db.Entry(model).State = EntityState.Modified;
-                    if (db.SaveChanges() > 0)
-                        return true;
+                    return db.SaveChanges() > 0;
                 }
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw ex;
             }
             return false;
         }
@@ -61,14 +58,13 @@ namespace EProSeed.Lib.BLL.Repository
                 if (feedback != null)
                 {
                     db.TrainersFeedback.Remove(feedback);
-                    if (db.SaveChanges() > 0)
-                        return true;
+                    return db.SaveChanges() > 0;
                 }
                 return false;
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw ex;
             }
         }
 
@@ -79,7 +75,7 @@ namespace EProSeed.Lib.BLL.Repository
                return db.TrainersFeedback.Find(Id);               
             }
             catch (Exception ex){
-                throw new Exception(ex.Message);
+                throw ex;
             }
         }
 
@@ -125,7 +121,7 @@ namespace EProSeed.Lib.BLL.Repository
             }
             catch(Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw ex;
             }
 
             return customTrainerFeedback;
@@ -178,7 +174,7 @@ namespace EProSeed.Lib.BLL.Repository
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw ex;
             }
 
             return customTrainerFeedback;
