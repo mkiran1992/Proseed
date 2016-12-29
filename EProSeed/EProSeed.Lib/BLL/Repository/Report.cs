@@ -47,32 +47,34 @@ namespace EProSeed.Lib.BLL.Repository
 
         public ReportModel GetReport(int batchId, int indcuteeId)
         {
-            List<DateTime> dates = db.BatchDates.Where(d => d.BatchID == batchId && d.BatchDate <= DateTime.Now).OrderBy(n => n.BatchDate).Select(n => n.BatchDate).ToList();
-            List<InducteeModel> inductees = db.Inductee.Where(m => m.BatchID == batchId).ToList();
-            InducteeModel selectedInductee = indcuteeId >= 0 ? inductees.Find(n => n.Id == indcuteeId) : null;
-            Decimal batchSum = 0.0M;
+            List<DateTime> batchDateList = db.BatchDates.Where(d => d.BatchID == batchId && d.BatchDate <= DateTime.Now)
+                                                    .OrderBy(n => n.BatchDate)
+                                                    .Select(n => n.BatchDate).ToList();
+            List<InducteeModel> inducteesList = db.Inductee.Where(m => m.BatchID == batchId).ToList();
+            InducteeModel selectedInductee = indcuteeId > 0 ? inducteesList.Find(n => n.Id == indcuteeId) : null;
+            decimal batchSum = 0.0M;
             ReportModel reportModel = new ReportModel()
             {
                 TrainerName = TrainerName(batchId),
                 BatchId = batchId,
                 InducteeId = indcuteeId,
-                NumberofInductees = inductees.Count,
+                NumberofInductees = inducteesList.Count,
                 InducteeName = selectedInductee != null ? selectedInductee.Name : "",
                 FeedBacks = new List<ReportFeedbackModel>()
             };
-            foreach (InducteeModel inductee in inductees)
-                batchSum += GetInducteeFeedbackAverage(dates, selectedInductee, reportModel, inductee);
+            foreach (InducteeModel inductee in inducteesList)
+                batchSum += GetInducteeFeedbackAverage(batchDateList, selectedInductee, reportModel, inductee);
             reportModel.BatchAverage = Math.Round(batchSum / reportModel.NumberofInductees, 2);
             return reportModel;
         }
 
-        private decimal GetInducteeFeedbackAverage(List<DateTime> dates, InducteeModel selectedInductee, ReportModel reportModel, InducteeModel inductee)
+        private decimal GetInducteeFeedbackAverage(List<DateTime> batchDateList, InducteeModel selectedInductee, ReportModel reportModel, InducteeModel inductee)
         {
             var feedBacks = db.Feedback.Where(m => m.InducteeID == inductee.Id).ToList();
-            Decimal inudcteeSum = 0.0M;
-            foreach (DateTime date in dates)
+            decimal inudcteeSum = 0.0M;
+            foreach (DateTime date in batchDateList)
             {
-                Decimal sum = GetFeedbackAverageForDate(feedBacks, date);
+                decimal sum = GetFeedbackAverageByDate(feedBacks, date);
                 inudcteeSum += sum;
                 if (selectedInductee != null && inductee.Id == selectedInductee.Id)
                     reportModel.FeedBacks.Add(new ReportFeedbackModel()
@@ -81,13 +83,13 @@ namespace EProSeed.Lib.BLL.Repository
                         Score = sum
                     });
             }
-            Decimal inudcteeAvg = Math.Round(inudcteeSum / dates.Count, 2);
+            decimal inudcteeAvg = Math.Round(inudcteeSum / batchDateList.Count, 2);
             if (selectedInductee != null && inductee.Id == selectedInductee.Id)
                 reportModel.InducteeAverage = inudcteeAvg;
             return inudcteeAvg;
         }
 
-        private decimal GetFeedbackAverageForDate(List<FeedbackModel> feedBacks, DateTime date)
+        private decimal GetFeedbackAverageByDate(List<FeedbackModel> feedBacks, DateTime date)
         {
             var feedBack = feedBacks.FirstOrDefault(p => p.FeedbackDate.Date == date);
             Decimal sum = 0.0M;

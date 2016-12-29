@@ -21,8 +21,6 @@ $(document).ready(function () {
                         
                     }
                     $('#InducteeId').html(html);
-                },
-                error: function () {
                 }
             });
         }
@@ -41,8 +39,6 @@ $(document).ready(function () {
                 dataType: "html",
                 success: function (data) {
                     $("#reportPartial").html(data);
-                },
-                error: function () {
                 }
             });
         }

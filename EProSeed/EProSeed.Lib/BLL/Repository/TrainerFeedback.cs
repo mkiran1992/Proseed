@@ -73,7 +73,7 @@ namespace EProSeed.Lib.BLL.Repository
                 foreach (var feedback in feedbackList)
                 {
                     var feedbackReponse = new FeedbackResponse();
-                    feedbackReponse.Id = feedback.ID;
+                    feedbackReponse.ID = feedback.ID;
                     feedbackReponse.Rating = feedback.Rating;
                     feedbackReponse.WhatWentWell = feedback.WhatWentWell;
                     feedbackReponse.DidnotGoWell = feedback.DidnotGoWell;
@@ -115,7 +115,7 @@ namespace EProSeed.Lib.BLL.Repository
                 foreach (var feedback in feedbackList)
                 {
                     var feedbackReponse = new FeedbackResponse();
-                    feedbackReponse.Id = feedback.ID;
+                    feedbackReponse.ID = feedback.ID;
                     feedbackReponse.Rating = feedback.Rating;
                     feedbackReponse.WhatWentWell = feedback.WhatWentWell;
                     feedbackReponse.DidnotGoWell = feedback.DidnotGoWell;
