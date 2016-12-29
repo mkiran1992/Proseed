@@ -1,8 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
-MinimumVisualStudioVersion = 10.0.40219.1
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EProSeed.Lib", "EProSeed.Lib\EProSeed.Lib.csproj", "{695F9F0C-896D-4E2A-ABBD-D97F8FC2A502}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EProSeed.DAL", "EProSeed.DAL\EProSeed.DAL.csproj", "{9874E7E3-1A84-4DC4-A0D6-36FC33CAF976}"
@@ -12,6 +10,11 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EProSeed.Web", "EProSeed.Web\EProSeed.Web.csproj", "{F6FDF2DB-B441-4544-9C3B-B3E4CAA3DB97}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Proseed Unit Test", "Proseed Unit Test\Proseed Unit Test.csproj", "{40038F48-627E-446F-9F06-02EAD4D26AD4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{920EFC71-1728-4588-9990-72FE093CF8D9}"
+	ProjectSection(SolutionItems) = preProject
+		sonar-project.properties = sonar-project.properties
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
