@@ -15,8 +15,6 @@ namespace EProSeed.Models
         public int ID { get; set; }
         public DateTime FeedbackDate { get; set; }
 
-        //[Display(Name = "Feedback")]
-        //public string FeedBack { get; set; }
 
         [ForeignKey("Inductee")]
         public int InducteeID { get; set; }

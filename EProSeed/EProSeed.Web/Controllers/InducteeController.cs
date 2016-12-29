@@ -5,7 +5,6 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using EProSeed.Models;
-using MyNamespace.Filters;
 
 namespace EProSeed.Web.Controllers
 {
@@ -71,7 +70,7 @@ namespace EProSeed.Web.Controllers
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 ViewData["ErrorMsg"] = "Failed to create Trainee.";
             }
@@ -118,7 +117,6 @@ namespace EProSeed.Web.Controllers
             return View(Inductee);
         }
 
-        [ValidateHeaderAntiForgeryTokenAttribute]
         public ActionResult Delete(int? id)
         {
             if (id == null)
