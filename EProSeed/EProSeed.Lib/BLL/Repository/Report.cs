@@ -13,9 +13,14 @@ namespace EProSeed.Lib.BLL.Repository
     {
         protected readonly ProDbContext db;
 
-        public Report()
+        public Report(ProDbContext context)
         {
-            db = new ProDbContext();
+            this.db = context;
+        }
+
+        public Report() : this(new ProDbContext())
+        {
+            
         }
 
         public string TrainerName(int batchId)
